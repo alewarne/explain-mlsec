@@ -2,10 +2,10 @@
 
 ### This folder contains Training scripts for the four neural networks based on the papers:
 
-* Adversarial examples for malware detection (Grosse et al.) - called Drebin.
-* Deep Android Malware Detection (McLaughlin et al.) - called DAMD.
-* VulDeePecker: A Deep Learning-Based System for Vulnerability Detection (Li et al.) - called VulDeePecker.
-* LEMNA: Explaining Deep Learning based Security Applications (Guo et al.) - called Mimicus.
+* Adversarial examples for malware detection ([Grosse et al.](http://patrickmcdaniel.org/pubs/esorics17.pdf)) - called Drebin.
+* Deep Android Malware Detection ([McLaughlin et al.](https://adamdoupe.com/publications/deep-android-malware-detection-codaspy2017.pdf)) - called DAMD.
+* VulDeePecker: A Deep Learning-Based System for Vulnerability Detection ([Li et al.](https://arxiv.org/pdf/1801.01681.pdf)) - called VulDeePecker.
+* LEMNA: Explaining Deep Learning based Security Applications ([Guo et al.](http://people.cs.vt.edu/gangwang/ccs18.pdf)) - called Mimicus.
 
 #### To keep the size of this repo handable, we do not deliver all the datasets with it but all of them are accessible for download online. Each folder contains a config file where you can adjust training parameters.
 * Mimicus: Call `python3 mimicus.py` to train the network.
