@@ -9,7 +9,7 @@
 
 #### To keep the size of this repo handable, we do not deliver all the datasets with it but all of them are accessible for download online. Each folder contains a config file where you can adjust training parameters.
 * Mimicus: Call `python3 mimicus.py` to train the network.
-* Drebin: Adjust the paths in the config file to point to the location you downloaded the drebin dataset to. Call `drebin.py` to train the network.
+* Drebin: Adjust the paths in the config file to point to the location you downloaded the [drebin dataset](https://www.sec.cs.tu-bs.de/~danarp/drebin/) to. Call `drebin.py` to train the network.
 * VulDeePecker: Extract the json file from the zip. Afterwards run `python3 word2vec.py` to train a word2vec model. Then run `python3 vuldeepecker.py` to train the network.
 * DAMD: Extract the folder containig the dalvik opcodes. Afterwards run `python3 preprocessing.py` to convert them. Then run `python3 damd.py` to train the network.
 
