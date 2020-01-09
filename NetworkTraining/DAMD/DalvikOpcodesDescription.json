@@ -1,0 +1,1538 @@
+{
+    "00": [
+        "00 10x",
+        "nop",
+        "",
+        "Waste cycles.\nNote:\nData-bearing pseudo-instructions are tagged with this opcode, in which\ncase the high-order byte of the opcode unit indicates the nature of\nthe data. See \"packed-switch-payload Format\",\n\"sparse-switch-payload Format\", and\n\"fill-array-data-payload Format\" below."
+    ],
+    "01": [
+        "01 12x",
+        "move vA, vB",
+        "A: destination register (4 bits)\nB: source register (4 bits)",
+        "Move the contents of one non-object register to another."
+    ],
+    "02": [
+        "02 22x",
+        "move/from16 vAA, vBBBB",
+        "A: destination register (8 bits)\nB: source register (16 bits)",
+        "Move the contents of one non-object register to another."
+    ],
+    "03": [
+        "03 32x",
+        "move/16 vAAAA, vBBBB",
+        "A: destination register (16 bits)\nB: source register (16 bits)",
+        "Move the contents of one non-object register to another."
+    ],
+    "04": [
+        "04 12x",
+        "move-wide vA, vB",
+        "A: destination register pair (4 bits)\nB: source register pair (4 bits)",
+        "Move the contents of one register-pair to another.\nNote:\nIt is legal to move from vN to either\nvN-1 or vN+1, so implementations\nmust arrange for both halves of a register pair to be read before\nanything is written."
+    ],
+    "05": [
+        "05 22x",
+        "move-wide/from16 vAA, vBBBB",
+        "A: destination register pair (8 bits)\nB: source register pair (16 bits)",
+        "Move the contents of one register-pair to another.\nNote:\nImplementation considerations are the same as move-wide,\nabove."
+    ],
+    "06": [
+        "06 32x",
+        "move-wide/16 vAAAA, vBBBB",
+        "A: destination register pair (16 bits)\nB: source register pair (16 bits)",
+        "Move the contents of one register-pair to another.\nNote:\nImplementation considerations are the same as move-wide,\nabove."
+    ],
+    "07": [
+        "07 12x",
+        "move-object vA, vB",
+        "A: destination register (4 bits)\nB: source register (4 bits)",
+        "Move the contents of one object-bearing register to another."
+    ],
+    "08": [
+        "08 22x",
+        "move-object/from16 vAA, vBBBB",
+        "A: destination register (8 bits)\nB: source register (16 bits)",
+        "Move the contents of one object-bearing register to another."
+    ],
+    "09": [
+        "09 32x",
+        "move-object/16 vAAAA, vBBBB",
+        "A: destination register (16 bits)\nB: source register (16 bits)",
+        "Move the contents of one object-bearing register to another."
+    ],
+    "0a": [
+        "0a 11x",
+        "move-result vAA",
+        "A: destination register (8 bits)",
+        "Move the single-word non-object result of the most recent\ninvoke-kind into the indicated register.\nThis must be done as the instruction immediately after an\ninvoke-kind whose (single-word, non-object) result\nis not to be ignored; anywhere else is invalid."
+    ],
+    "0b": [
+        "0b 11x",
+        "move-result-wide vAA",
+        "A: destination register pair (8 bits)",
+        "Move the double-word result of the most recent\ninvoke-kind into the indicated register pair.\nThis must be done as the instruction immediately after an\ninvoke-kind whose (double-word) result\nis not to be ignored; anywhere else is invalid."
+    ],
+    "0c": [
+        "0c 11x",
+        "move-result-object vAA",
+        "A: destination register (8 bits)",
+        "Move the object result of the most recent invoke-kind\ninto the indicated register. This must be done as the instruction\nimmediately after an invoke-kind or\nfilled-new-array\nwhose (object) result is not to be ignored; anywhere else is invalid."
+    ],
+    "0d": [
+        "0d 11x",
+        "move-exception vAA",
+        "A: destination register (8 bits)",
+        "Save a just-caught exception into the given register. This must\nbe the first instruction of any exception handler whose caught\nexception is not to be ignored, and this instruction must only\never occur as the first instruction of an exception handler; anywhere\nelse is invalid."
+    ],
+    "0e": [
+        "0e 10x",
+        "return-void",
+        "",
+        "Return from a void method."
+    ],
+    "0f": [
+        "0f 11x",
+        "return vAA",
+        "A: return value register (8 bits)",
+        "Return from a single-width (32-bit) non-object value-returning\nmethod."
+    ],
+    "10": [
+        "10 11x",
+        "return-wide vAA",
+        "A: return value register-pair (8 bits)",
+        "Return from a double-width (64-bit) value-returning method."
+    ],
+    "11": [
+        "11 11x",
+        "return-object vAA",
+        "A: return value register (8 bits)",
+        "Return from an object-returning method."
+    ],
+    "12": [
+        "12 11n",
+        "const/4 vA, #+B",
+        "A: destination register (4 bits)\nB: signed int (4 bits)",
+        "Move the given literal value (sign-extended to 32 bits) into\nthe specified register."
+    ],
+    "13": [
+        "13 21s",
+        "const/16 vAA, #+BBBB",
+        "A: destination register (8 bits)\nB: signed int (16 bits)",
+        "Move the given literal value (sign-extended to 32 bits) into\nthe specified register."
+    ],
+    "14": [
+        "14 31i",
+        "const vAA, #+BBBBBBBB",
+        "A: destination register (8 bits)\nB: arbitrary 32-bit constant",
+        "Move the given literal value into the specified register."
+    ],
+    "15": [
+        "15 21h",
+        "const/high16 vAA, #+BBBB0000",
+        "A: destination register (8 bits)\nB: signed int (16 bits)",
+        "Move the given literal value (right-zero-extended to 32 bits) into\nthe specified register."
+    ],
+    "16": [
+        "16 21s",
+        "const-wide/16 vAA, #+BBBB",
+        "A: destination register (8 bits)\nB: signed int (16 bits)",
+        "Move the given literal value (sign-extended to 64 bits) into\nthe specified register-pair."
+    ],
+    "17": [
+        "17 31i",
+        "const-wide/32 vAA, #+BBBBBBBB",
+        "A: destination register (8 bits)\nB: signed int (32 bits)",
+        "Move the given literal value (sign-extended to 64 bits) into\nthe specified register-pair."
+    ],
+    "18": [
+        "18 51l",
+        "const-wide vAA, #+BBBBBBBBBBBBBBBB",
+        "A: destination register (8 bits)\nB: arbitrary double-width (64-bit) constant",
+        "Move the given literal value into\nthe specified register-pair."
+    ],
+    "19": [
+        "19 21h",
+        "const-wide/high16 vAA, #+BBBB000000000000",
+        "A: destination register (8 bits)\nB: signed int (16 bits)",
+        "Move the given literal value (right-zero-extended to 64 bits) into\nthe specified register-pair."
+    ],
+    "1a": [
+        "1a 21c",
+        "const-string vAA, string@BBBB",
+        "A: destination register (8 bits)\nB: string index",
+        "Move a reference to the string specified by the given index into the\nspecified register."
+    ],
+    "1b": [
+        "1b 31c",
+        "const-string/jumbo vAA, string@BBBBBBBB",
+        "A: destination register (8 bits)\nB: string index",
+        "Move a reference to the string specified by the given index into the\nspecified register."
+    ],
+    "1c": [
+        "1c 21c",
+        "const-class vAA, type@BBBB",
+        "A: destination register (8 bits)\nB: type index",
+        "Move a reference to the class specified by the given index into the\nspecified register. In the case where the indicated type is primitive,\nthis will store a reference to the primitive type's degenerate\nclass."
+    ],
+    "1d": [
+        "1d 11x",
+        "monitor-enter vAA",
+        "A: reference-bearing register (8 bits)",
+        "Acquire the monitor for the indicated object."
+    ],
+    "1e": [
+        "1e 11x",
+        "monitor-exit vAA",
+        "A: reference-bearing register (8 bits)",
+        "Release the monitor for the indicated object.\nNote:\nIf this instruction needs to throw an exception, it must do\nso as if the pc has already advanced past the instruction.\nIt may be useful to think of this as the instruction successfully\nexecuting (in a sense), and the exception getting thrown after\nthe instruction but before the next one gets a chance to\nrun. This definition makes it possible for a method to use\na monitor cleanup catch-all (e.g., finally) block as\nthe monitor cleanup for that block itself, as a way to handle the\narbitrary exceptions that might get thrown due to the historical\nimplementation of Thread.stop(), while still managing\nto have proper monitor hygiene."
+    ],
+    "1f": [
+        "1f 21c",
+        "check-cast vAA, type@BBBB",
+        "A: reference-bearing register (8 bits)\nB: type index (16 bits)",
+        "Throw a ClassCastException if the reference in the\ngiven register cannot be cast to the indicated type.\nNote: Since A must always be a reference\n(and not a primitive value), this will necessarily fail at runtime\n(that is, it will throw an exception) if B refers to a\nprimitive type."
+    ],
+    "20": [
+        "20 22c",
+        "instance-of vA, vB, type@CCCC",
+        "A: destination register (4 bits)\nB: reference-bearing register (4 bits)\nC: type index (16 bits)",
+        "Store in the given destination register 1\nif the indicated reference is an instance of the given type,\nor 0 if not.\nNote: Since B must always be a reference\n(and not a primitive value), this will always result\nin 0 being stored if C refers to a primitive\ntype."
+    ],
+    "21": [
+        "21 12x",
+        "array-length vA, vB",
+        "A: destination register (4 bits)\nB: array reference-bearing register (4 bits)",
+        "Store in the given destination register the length of the indicated\narray, in entries"
+    ],
+    "22": [
+        "22 21c",
+        "new-instance vAA, type@BBBB",
+        "A: destination register (8 bits)\nB: type index",
+        "Construct a new instance of the indicated type, storing a\nreference to it in the destination. The type must refer to a\nnon-array class."
+    ],
+    "23": [
+        "23 22c",
+        "new-array vA, vB, type@CCCC",
+        "A: destination register (4 bits)\nB: size register\nC: type index",
+        "Construct a new array of the indicated type and size. The type\nmust be an array type."
+    ],
+    "24": [
+        "24 35c",
+        "filled-new-array {vC, vD, vE, vF, vG}, type@BBBB",
+        "A: array size and argument word count (4 bits)\nB: type index (16 bits)\nC..G: argument registers (4 bits each)",
+        "Construct an array of the given type and size, filling it with the\nsupplied contents. The type must be an array type. The array's\ncontents must be single-word (that is,\nno arrays of long or double, but reference\ntypes are acceptable). The constructed\ninstance is stored as a \"result\" in the same way that the method invocation\ninstructions store their results, so the constructed instance must\nbe moved to a register with an immediately subsequent\nmove-result-object instruction (if it is to be used)."
+    ],
+    "25": [
+        "25 3rc",
+        "filled-new-array/range {vCCCC .. vNNNN}, type@BBBB",
+        "A: array size and argument word count (8 bits)\nB: type index (16 bits)\nC: first argument register (16 bits)\nN = A + C - 1",
+        "Construct an array of the given type and size, filling it with\nthe supplied contents. Clarifications and restrictions are the same\nas filled-new-array, described above."
+    ],
+    "26": [
+        "26 31t",
+        "fill-array-data vAA, +BBBBBBBB (with supplemental data as specified\nbelow in \"fill-array-data-payload Format\")",
+        "A: array reference (8 bits)\nB: signed \"branch\" offset to table data pseudo-instruction\n(32 bits)",
+        "Fill the given array with the indicated data. The reference must be\nto an array of primitives, and the data table must match it in type and\nmust contain no more elements than will fit in the array. That is,\nthe array may be larger than the table, and if so, only the initial\nelements of the array are set, leaving the remainder alone."
+    ],
+    "27": [
+        "27 11x",
+        "throw vAA",
+        "A: exception-bearing register (8 bits)",
+        "Throw the indicated exception."
+    ],
+    "28": [
+        "28 10t",
+        "goto +AA",
+        "A: signed branch offset (8 bits)",
+        "Unconditionally jump to the indicated instruction.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either with goto/32 or\nby including a nop as a target before the branch.)"
+    ],
+    "29": [
+        "29 20t",
+        "goto/16 +AAAA",
+        "A: signed branch offset (16 bits)",
+        "Unconditionally jump to the indicated instruction.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either with goto/32 or\nby including a nop as a target before the branch.)"
+    ],
+    "2a": [
+        "2a 30t",
+        "goto/32 +AAAAAAAA",
+        "A: signed branch offset (32 bits)",
+        "Unconditionally jump to the indicated instruction."
+    ],
+    "2b": [
+        "2b 31t",
+        "packed-switch vAA, +BBBBBBBB (with supplemental data as\nspecified below in \"packed-switch-payload Format\")",
+        "A: register to test\nB: signed \"branch\" offset to table data pseudo-instruction\n(32 bits)",
+        "Jump to a new instruction based on the value in the\ngiven register, using a table of offsets corresponding to each value\nin a particular integral range, or fall through to the next\ninstruction if there is no match."
+    ],
+    "2c": [
+        "2c 31t",
+        "sparse-switch vAA, +BBBBBBBB (with supplemental data as\nspecified below in \"sparse-switch-payload Format\")",
+        "A: register to test\nB: signed \"branch\" offset to table data pseudo-instruction\n(32 bits)",
+        "Jump to a new instruction based on the value in the given\nregister, using an ordered table of value-offset pairs, or fall\nthrough to the next instruction if there is no match."
+    ],
+    "2d": [
+        "2d..31 23x",
+        "cmpl-float (lt bias) vAA, vBB, vCC",
+        "A: destination register (8 bits)\nB: first source register or pair\nC: second source register or pair",
+        "Perform the indicated floating point or long comparison,\nsetting a to 0 if b == c,\n1 if b > c,\nor -1 if b < c.\nThe \"bias\" listed for the floating point operations\nindicates how NaN comparisons are treated: \"gt bias\"\ninstructions return 1 for NaN comparisons,\nand \"lt bias\" instructions return -1.\nFor example, to check to see if floating point\nx < y it is advisable to use\ncmpg-float; a result of -1 indicates that\nthe test was true, and the other values indicate it was false either\ndue to a valid comparison or because one of the values was\nNaN."
+    ],
+    "2e": [
+        "2d..31 23x",
+        "cmpg-float (gt bias) vAA, vBB, vCC",
+        "A: destination register (8 bits)\nB: first source register or pair\nC: second source register or pair",
+        "Perform the indicated floating point or long comparison,\nsetting a to 0 if b == c,\n1 if b > c,\nor -1 if b < c.\nThe \"bias\" listed for the floating point operations\nindicates how NaN comparisons are treated: \"gt bias\"\ninstructions return 1 for NaN comparisons,\nand \"lt bias\" instructions return -1.\nFor example, to check to see if floating point\nx < y it is advisable to use\ncmpg-float; a result of -1 indicates that\nthe test was true, and the other values indicate it was false either\ndue to a valid comparison or because one of the values was\nNaN."
+    ],
+    "2f": [
+        "2d..31 23x",
+        "cmpl-double (lt bias) vAA, vBB, vCC",
+        "A: destination register (8 bits)\nB: first source register or pair\nC: second source register or pair",
+        "Perform the indicated floating point or long comparison,\nsetting a to 0 if b == c,\n1 if b > c,\nor -1 if b < c.\nThe \"bias\" listed for the floating point operations\nindicates how NaN comparisons are treated: \"gt bias\"\ninstructions return 1 for NaN comparisons,\nand \"lt bias\" instructions return -1.\nFor example, to check to see if floating point\nx < y it is advisable to use\ncmpg-float; a result of -1 indicates that\nthe test was true, and the other values indicate it was false either\ndue to a valid comparison or because one of the values was\nNaN."
+    ],
+    "30": [
+        "2d..31 23x",
+        "cmpg-double (gt bias) vAA, vBB, vCC",
+        "A: destination register (8 bits)\nB: first source register or pair\nC: second source register or pair",
+        "Perform the indicated floating point or long comparison,\nsetting a to 0 if b == c,\n1 if b > c,\nor -1 if b < c.\nThe \"bias\" listed for the floating point operations\nindicates how NaN comparisons are treated: \"gt bias\"\ninstructions return 1 for NaN comparisons,\nand \"lt bias\" instructions return -1.\nFor example, to check to see if floating point\nx < y it is advisable to use\ncmpg-float; a result of -1 indicates that\nthe test was true, and the other values indicate it was false either\ndue to a valid comparison or because one of the values was\nNaN."
+    ],
+    "31": [
+        "2d..31 23x",
+        "cmp-long vAA, vBB, vCC",
+        "A: destination register (8 bits)\nB: first source register or pair\nC: second source register or pair",
+        "Perform the indicated floating point or long comparison,\nsetting a to 0 if b == c,\n1 if b > c,\nor -1 if b < c.\nThe \"bias\" listed for the floating point operations\nindicates how NaN comparisons are treated: \"gt bias\"\ninstructions return 1 for NaN comparisons,\nand \"lt bias\" instructions return -1.\nFor example, to check to see if floating point\nx < y it is advisable to use\ncmpg-float; a result of -1 indicates that\nthe test was true, and the other values indicate it was false either\ndue to a valid comparison or because one of the values was\nNaN."
+    ],
+    "32": [
+        "32..37 22t",
+        "if-eq vA, vB, +CCCC",
+        "A: first register to test (4 bits)\nB: second register to test (4 bits)\nC: signed branch offset (16 bits)",
+        "Branch to the given destination if the given two registers' values\ncompare as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "33": [
+        "32..37 22t",
+        "if-ne vA, vB, +CCCC",
+        "A: first register to test (4 bits)\nB: second register to test (4 bits)\nC: signed branch offset (16 bits)",
+        "Branch to the given destination if the given two registers' values\ncompare as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "34": [
+        "32..37 22t",
+        "if-lt vA, vB, +CCCC",
+        "A: first register to test (4 bits)\nB: second register to test (4 bits)\nC: signed branch offset (16 bits)",
+        "Branch to the given destination if the given two registers' values\ncompare as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "35": [
+        "32..37 22t",
+        "if-ge vA, vB, +CCCC",
+        "A: first register to test (4 bits)\nB: second register to test (4 bits)\nC: signed branch offset (16 bits)",
+        "Branch to the given destination if the given two registers' values\ncompare as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "36": [
+        "32..37 22t",
+        "if-gt vA, vB, +CCCC",
+        "A: first register to test (4 bits)\nB: second register to test (4 bits)\nC: signed branch offset (16 bits)",
+        "Branch to the given destination if the given two registers' values\ncompare as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "37": [
+        "32..37 22t",
+        "if-le vA, vB, +CCCC",
+        "A: first register to test (4 bits)\nB: second register to test (4 bits)\nC: signed branch offset (16 bits)",
+        "Branch to the given destination if the given two registers' values\ncompare as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "38": [
+        "38..3d 21t",
+        "if-eqz vAA, +BBBB",
+        "A: register to test (8 bits)\nB: signed branch offset (16 bits)",
+        "Branch to the given destination if the given register's value compares\nwith 0 as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "39": [
+        "38..3d 21t",
+        "if-nez vAA, +BBBB",
+        "A: register to test (8 bits)\nB: signed branch offset (16 bits)",
+        "Branch to the given destination if the given register's value compares\nwith 0 as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "3a": [
+        "38..3d 21t",
+        "if-ltz vAA, +BBBB",
+        "A: register to test (8 bits)\nB: signed branch offset (16 bits)",
+        "Branch to the given destination if the given register's value compares\nwith 0 as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "3b": [
+        "38..3d 21t",
+        "if-gez vAA, +BBBB",
+        "A: register to test (8 bits)\nB: signed branch offset (16 bits)",
+        "Branch to the given destination if the given register's value compares\nwith 0 as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "3c": [
+        "38..3d 21t",
+        "if-gtz vAA, +BBBB",
+        "A: register to test (8 bits)\nB: signed branch offset (16 bits)",
+        "Branch to the given destination if the given register's value compares\nwith 0 as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "3d": [
+        "38..3d 21t",
+        "if-lez vAA, +BBBB",
+        "A: register to test (8 bits)\nB: signed branch offset (16 bits)",
+        "Branch to the given destination if the given register's value compares\nwith 0 as specified.\nNote:\nThe branch offset must not be 0. (A spin\nloop may be legally constructed either by branching around a\nbackward goto or by including a nop as\na target before the branch.)"
+    ],
+    "3e": [
+        "3e..43 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "3f": [
+        "3e..43 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "40": [
+        "3e..43 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "41": [
+        "3e..43 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "42": [
+        "3e..43 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "43": [
+        "3e..43 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "44": [
+        "44..51 23x",
+        "aget vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "45": [
+        "44..51 23x",
+        "aget-wide vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "46": [
+        "44..51 23x",
+        "aget-object vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "47": [
+        "44..51 23x",
+        "aget-boolean vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "48": [
+        "44..51 23x",
+        "aget-byte vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "49": [
+        "44..51 23x",
+        "aget-char vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "4a": [
+        "44..51 23x",
+        "aget-short vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "4b": [
+        "44..51 23x",
+        "aput vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "4c": [
+        "44..51 23x",
+        "aput-wide vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "4d": [
+        "44..51 23x",
+        "aput-object vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "4e": [
+        "44..51 23x",
+        "aput-boolean vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "4f": [
+        "44..51 23x",
+        "aput-byte vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "50": [
+        "44..51 23x",
+        "aput-char vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "51": [
+        "44..51 23x",
+        "aput-short vAA, vBB, vCC",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: array register (8 bits)\nC: index register (8 bits)",
+        "Perform the identified array operation at the identified index of\nthe given array, loading or storing into the value register."
+    ],
+    "52": [
+        "52..5f 22c",
+        "iget vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "53": [
+        "52..5f 22c",
+        "iget-wide vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "54": [
+        "52..5f 22c",
+        "iget-object vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "55": [
+        "52..5f 22c",
+        "iget-boolean vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "56": [
+        "52..5f 22c",
+        "iget-byte vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "57": [
+        "52..5f 22c",
+        "iget-char vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "58": [
+        "52..5f 22c",
+        "iget-short vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "59": [
+        "52..5f 22c",
+        "iput vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "5a": [
+        "52..5f 22c",
+        "iput-wide vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "5b": [
+        "52..5f 22c",
+        "iput-object vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "5c": [
+        "52..5f 22c",
+        "iput-boolean vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "5d": [
+        "52..5f 22c",
+        "iput-byte vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "5e": [
+        "52..5f 22c",
+        "iput-char vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "5f": [
+        "52..5f 22c",
+        "iput-short vA, vB, field@CCCC",
+        "A: value register or pair; may be source or dest\n(4 bits)\nB: object register (4 bits)\nC: instance field reference index (16 bits)",
+        "Perform the identified object instance field operation with\nthe identified field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "60": [
+        "60..6d 21c",
+        "sget vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "61": [
+        "60..6d 21c",
+        "sget-wide vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "62": [
+        "60..6d 21c",
+        "sget-object vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "63": [
+        "60..6d 21c",
+        "sget-boolean vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "64": [
+        "60..6d 21c",
+        "sget-byte vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "65": [
+        "60..6d 21c",
+        "sget-char vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "66": [
+        "60..6d 21c",
+        "sget-short vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "67": [
+        "60..6d 21c",
+        "sput vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "68": [
+        "60..6d 21c",
+        "sput-wide vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "69": [
+        "60..6d 21c",
+        "sput-object vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "6a": [
+        "60..6d 21c",
+        "sput-boolean vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "6b": [
+        "60..6d 21c",
+        "sput-byte vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "6c": [
+        "60..6d 21c",
+        "sput-char vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "6d": [
+        "60..6d 21c",
+        "sput-short vAA, field@BBBB",
+        "A: value register or pair; may be source or dest\n(8 bits)\nB: static field reference index (16 bits)",
+        "Perform the identified object static field operation with the identified\nstatic field, loading or storing into the value register.\nNote: These opcodes are reasonable candidates for static linking,\naltering the field argument to be a more direct offset."
+    ],
+    "6e": [
+        "6e..72 35c",
+        "invoke-virtual {vC, vD, vE, vF, vG}, meth@BBBB",
+        "A: argument word count (4 bits)\nB: method reference index (16 bits)\nC..G: argument registers (4 bits each)",
+        "Call the indicated method. The result (if any) may be stored\nwith an appropriate move-result* variant as the immediately\nsubsequent instruction.\ninvoke-virtual is used to invoke a normal virtual\nmethod (a method that is not private, static,\nor final, and is also not a constructor).\nWhen the method_id references a method of a non-interface\nclass, invoke-super is used to invoke the closest superclass's\nvirtual method (as opposed to the one with the same method_id\nin the calling class). The same method restrictions hold as for\ninvoke-virtual.\nIn Dex files version 037 or later, if the\nmethod_id refers to an interface method,\ninvoke-super is used to invoke the most specific,\nnon-overridden version of that method defined on that interface.  The same\nmethod restrictions hold as for invoke-virtual. In Dex files\nprior to version 037, having an interface\nmethod_id is illegal and undefined.\ninvoke-direct is used to invoke a non-static\ndirect method (that is, an instance method that is by its nature\nnon-overridable, namely either a private instance method or a\nconstructor).\ninvoke-static is used to invoke a static\nmethod (which is always considered a direct method).\ninvoke-interface is used to invoke an\ninterface method, that is, on an object whose concrete\nclass isn't known, using a method_id that refers to\nan interface.\nNote: These opcodes are reasonable candidates for static linking,\naltering the method argument to be a more direct offset\n(or pair thereof)."
+    ],
+    "6f": [
+        "6e..72 35c",
+        "invoke-super {vC, vD, vE, vF, vG}, meth@BBBB",
+        "A: argument word count (4 bits)\nB: method reference index (16 bits)\nC..G: argument registers (4 bits each)",
+        "Call the indicated method. The result (if any) may be stored\nwith an appropriate move-result* variant as the immediately\nsubsequent instruction.\ninvoke-virtual is used to invoke a normal virtual\nmethod (a method that is not private, static,\nor final, and is also not a constructor).\nWhen the method_id references a method of a non-interface\nclass, invoke-super is used to invoke the closest superclass's\nvirtual method (as opposed to the one with the same method_id\nin the calling class). The same method restrictions hold as for\ninvoke-virtual.\nIn Dex files version 037 or later, if the\nmethod_id refers to an interface method,\ninvoke-super is used to invoke the most specific,\nnon-overridden version of that method defined on that interface.  The same\nmethod restrictions hold as for invoke-virtual. In Dex files\nprior to version 037, having an interface\nmethod_id is illegal and undefined.\ninvoke-direct is used to invoke a non-static\ndirect method (that is, an instance method that is by its nature\nnon-overridable, namely either a private instance method or a\nconstructor).\ninvoke-static is used to invoke a static\nmethod (which is always considered a direct method).\ninvoke-interface is used to invoke an\ninterface method, that is, on an object whose concrete\nclass isn't known, using a method_id that refers to\nan interface.\nNote: These opcodes are reasonable candidates for static linking,\naltering the method argument to be a more direct offset\n(or pair thereof)."
+    ],
+    "70": [
+        "6e..72 35c",
+        "invoke-direct {vC, vD, vE, vF, vG}, meth@BBBB",
+        "A: argument word count (4 bits)\nB: method reference index (16 bits)\nC..G: argument registers (4 bits each)",
+        "Call the indicated method. The result (if any) may be stored\nwith an appropriate move-result* variant as the immediately\nsubsequent instruction.\ninvoke-virtual is used to invoke a normal virtual\nmethod (a method that is not private, static,\nor final, and is also not a constructor).\nWhen the method_id references a method of a non-interface\nclass, invoke-super is used to invoke the closest superclass's\nvirtual method (as opposed to the one with the same method_id\nin the calling class). The same method restrictions hold as for\ninvoke-virtual.\nIn Dex files version 037 or later, if the\nmethod_id refers to an interface method,\ninvoke-super is used to invoke the most specific,\nnon-overridden version of that method defined on that interface.  The same\nmethod restrictions hold as for invoke-virtual. In Dex files\nprior to version 037, having an interface\nmethod_id is illegal and undefined.\ninvoke-direct is used to invoke a non-static\ndirect method (that is, an instance method that is by its nature\nnon-overridable, namely either a private instance method or a\nconstructor).\ninvoke-static is used to invoke a static\nmethod (which is always considered a direct method).\ninvoke-interface is used to invoke an\ninterface method, that is, on an object whose concrete\nclass isn't known, using a method_id that refers to\nan interface.\nNote: These opcodes are reasonable candidates for static linking,\naltering the method argument to be a more direct offset\n(or pair thereof)."
+    ],
+    "71": [
+        "6e..72 35c",
+        "invoke-static {vC, vD, vE, vF, vG}, meth@BBBB",
+        "A: argument word count (4 bits)\nB: method reference index (16 bits)\nC..G: argument registers (4 bits each)",
+        "Call the indicated method. The result (if any) may be stored\nwith an appropriate move-result* variant as the immediately\nsubsequent instruction.\ninvoke-virtual is used to invoke a normal virtual\nmethod (a method that is not private, static,\nor final, and is also not a constructor).\nWhen the method_id references a method of a non-interface\nclass, invoke-super is used to invoke the closest superclass's\nvirtual method (as opposed to the one with the same method_id\nin the calling class). The same method restrictions hold as for\ninvoke-virtual.\nIn Dex files version 037 or later, if the\nmethod_id refers to an interface method,\ninvoke-super is used to invoke the most specific,\nnon-overridden version of that method defined on that interface.  The same\nmethod restrictions hold as for invoke-virtual. In Dex files\nprior to version 037, having an interface\nmethod_id is illegal and undefined.\ninvoke-direct is used to invoke a non-static\ndirect method (that is, an instance method that is by its nature\nnon-overridable, namely either a private instance method or a\nconstructor).\ninvoke-static is used to invoke a static\nmethod (which is always considered a direct method).\ninvoke-interface is used to invoke an\ninterface method, that is, on an object whose concrete\nclass isn't known, using a method_id that refers to\nan interface.\nNote: These opcodes are reasonable candidates for static linking,\naltering the method argument to be a more direct offset\n(or pair thereof)."
+    ],
+    "72": [
+        "6e..72 35c",
+        "invoke-interface {vC, vD, vE, vF, vG}, meth@BBBB",
+        "A: argument word count (4 bits)\nB: method reference index (16 bits)\nC..G: argument registers (4 bits each)",
+        "Call the indicated method. The result (if any) may be stored\nwith an appropriate move-result* variant as the immediately\nsubsequent instruction.\ninvoke-virtual is used to invoke a normal virtual\nmethod (a method that is not private, static,\nor final, and is also not a constructor).\nWhen the method_id references a method of a non-interface\nclass, invoke-super is used to invoke the closest superclass's\nvirtual method (as opposed to the one with the same method_id\nin the calling class). The same method restrictions hold as for\ninvoke-virtual.\nIn Dex files version 037 or later, if the\nmethod_id refers to an interface method,\ninvoke-super is used to invoke the most specific,\nnon-overridden version of that method defined on that interface.  The same\nmethod restrictions hold as for invoke-virtual. In Dex files\nprior to version 037, having an interface\nmethod_id is illegal and undefined.\ninvoke-direct is used to invoke a non-static\ndirect method (that is, an instance method that is by its nature\nnon-overridable, namely either a private instance method or a\nconstructor).\ninvoke-static is used to invoke a static\nmethod (which is always considered a direct method).\ninvoke-interface is used to invoke an\ninterface method, that is, on an object whose concrete\nclass isn't known, using a method_id that refers to\nan interface.\nNote: These opcodes are reasonable candidates for static linking,\naltering the method argument to be a more direct offset\n(or pair thereof)."
+    ],
+    "73": [
+        "73 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "74": [
+        "74..78 3rc",
+        "invoke-virtual/range {vCCCC .. vNNNN}, meth@BBBB",
+        "A: argument word count (8 bits)\nB: method reference index (16 bits)\nC: first argument register (16 bits)\nN = A + C - 1",
+        "Call the indicated method. See first invoke-kind\ndescription above for details, caveats, and suggestions."
+    ],
+    "75": [
+        "74..78 3rc",
+        "invoke-super/range {vCCCC .. vNNNN}, meth@BBBB",
+        "A: argument word count (8 bits)\nB: method reference index (16 bits)\nC: first argument register (16 bits)\nN = A + C - 1",
+        "Call the indicated method. See first invoke-kind\ndescription above for details, caveats, and suggestions."
+    ],
+    "76": [
+        "74..78 3rc",
+        "invoke-direct/range {vCCCC .. vNNNN}, meth@BBBB",
+        "A: argument word count (8 bits)\nB: method reference index (16 bits)\nC: first argument register (16 bits)\nN = A + C - 1",
+        "Call the indicated method. See first invoke-kind\ndescription above for details, caveats, and suggestions."
+    ],
+    "77": [
+        "74..78 3rc",
+        "invoke-static/range {vCCCC .. vNNNN}, meth@BBBB",
+        "A: argument word count (8 bits)\nB: method reference index (16 bits)\nC: first argument register (16 bits)\nN = A + C - 1",
+        "Call the indicated method. See first invoke-kind\ndescription above for details, caveats, and suggestions."
+    ],
+    "78": [
+        "74..78 3rc",
+        "invoke-interface/range {vCCCC .. vNNNN}, meth@BBBB",
+        "A: argument word count (8 bits)\nB: method reference index (16 bits)\nC: first argument register (16 bits)\nN = A + C - 1",
+        "Call the indicated method. See first invoke-kind\ndescription above for details, caveats, and suggestions."
+    ],
+    "79": [
+        "79..7a 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "7a": [
+        "79..7a 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "7b": [
+        "7b..8f 12x",
+        "neg-int vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "7c": [
+        "7b..8f 12x",
+        "not-int vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "7d": [
+        "7b..8f 12x",
+        "neg-long vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "7e": [
+        "7b..8f 12x",
+        "not-long vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "7f": [
+        "7b..8f 12x",
+        "neg-float vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "80": [
+        "7b..8f 12x",
+        "neg-double vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "81": [
+        "7b..8f 12x",
+        "int-to-long vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "82": [
+        "7b..8f 12x",
+        "int-to-float vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "83": [
+        "7b..8f 12x",
+        "int-to-double vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "84": [
+        "7b..8f 12x",
+        "long-to-int vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "85": [
+        "7b..8f 12x",
+        "long-to-float vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "86": [
+        "7b..8f 12x",
+        "long-to-double vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "87": [
+        "7b..8f 12x",
+        "float-to-int vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "88": [
+        "7b..8f 12x",
+        "float-to-long vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "89": [
+        "7b..8f 12x",
+        "float-to-double vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "8a": [
+        "7b..8f 12x",
+        "double-to-int vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "8b": [
+        "7b..8f 12x",
+        "double-to-long vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "8c": [
+        "7b..8f 12x",
+        "double-to-float vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "8d": [
+        "7b..8f 12x",
+        "int-to-byte vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "8e": [
+        "7b..8f 12x",
+        "int-to-char vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "8f": [
+        "7b..8f 12x",
+        "int-to-short vA, vB",
+        "A: destination register or pair (4 bits)\nB: source register or pair (4 bits)",
+        "Perform the identified unary operation on the source register,\nstoring the result in the destination register."
+    ],
+    "90": [
+        "90..af 23x",
+        "add-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "91": [
+        "90..af 23x",
+        "sub-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "92": [
+        "90..af 23x",
+        "mul-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "93": [
+        "90..af 23x",
+        "div-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "94": [
+        "90..af 23x",
+        "rem-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "95": [
+        "90..af 23x",
+        "and-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "96": [
+        "90..af 23x",
+        "or-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "97": [
+        "90..af 23x",
+        "xor-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "98": [
+        "90..af 23x",
+        "shl-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "99": [
+        "90..af 23x",
+        "shr-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "9a": [
+        "90..af 23x",
+        "ushr-int vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "9b": [
+        "90..af 23x",
+        "add-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "9c": [
+        "90..af 23x",
+        "sub-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "9d": [
+        "90..af 23x",
+        "mul-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "9e": [
+        "90..af 23x",
+        "div-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "9f": [
+        "90..af 23x",
+        "rem-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a0": [
+        "90..af 23x",
+        "and-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a1": [
+        "90..af 23x",
+        "or-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a2": [
+        "90..af 23x",
+        "xor-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a3": [
+        "90..af 23x",
+        "shl-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a4": [
+        "90..af 23x",
+        "shr-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a5": [
+        "90..af 23x",
+        "ushr-long vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a6": [
+        "90..af 23x",
+        "add-float vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a7": [
+        "90..af 23x",
+        "sub-float vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a8": [
+        "90..af 23x",
+        "mul-float vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "a9": [
+        "90..af 23x",
+        "div-float vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "aa": [
+        "90..af 23x",
+        "rem-float vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "ab": [
+        "90..af 23x",
+        "add-double vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "ac": [
+        "90..af 23x",
+        "sub-double vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "ad": [
+        "90..af 23x",
+        "mul-double vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "ae": [
+        "90..af 23x",
+        "div-double vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "af": [
+        "90..af 23x",
+        "rem-double vAA, vBB, vCC",
+        "A: destination register or pair (8 bits)\nB: first source register or pair (8 bits)\nC: second source register or pair (8 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the destination register.\nNote:\nContrary to other -long mathematical operations (which\ntake register pairs for both their first and their second source),\nshl-long, shr-long, and ushr-long\ntake a register pair for their first source (the value to be shifted),\nbut a single register for their second source (the shifting distance)."
+    ],
+    "b0": [
+        "b0..cf 12x",
+        "add-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b1": [
+        "b0..cf 12x",
+        "sub-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b2": [
+        "b0..cf 12x",
+        "mul-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b3": [
+        "b0..cf 12x",
+        "div-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b4": [
+        "b0..cf 12x",
+        "rem-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b5": [
+        "b0..cf 12x",
+        "and-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b6": [
+        "b0..cf 12x",
+        "or-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b7": [
+        "b0..cf 12x",
+        "xor-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b8": [
+        "b0..cf 12x",
+        "shl-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "b9": [
+        "b0..cf 12x",
+        "shr-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "ba": [
+        "b0..cf 12x",
+        "ushr-int/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "bb": [
+        "b0..cf 12x",
+        "add-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "bc": [
+        "b0..cf 12x",
+        "sub-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "bd": [
+        "b0..cf 12x",
+        "mul-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "be": [
+        "b0..cf 12x",
+        "div-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "bf": [
+        "b0..cf 12x",
+        "rem-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c0": [
+        "b0..cf 12x",
+        "and-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c1": [
+        "b0..cf 12x",
+        "or-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c2": [
+        "b0..cf 12x",
+        "xor-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c3": [
+        "b0..cf 12x",
+        "shl-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c4": [
+        "b0..cf 12x",
+        "shr-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c5": [
+        "b0..cf 12x",
+        "ushr-long/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c6": [
+        "b0..cf 12x",
+        "add-float/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c7": [
+        "b0..cf 12x",
+        "sub-float/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c8": [
+        "b0..cf 12x",
+        "mul-float/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "c9": [
+        "b0..cf 12x",
+        "div-float/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "ca": [
+        "b0..cf 12x",
+        "rem-float/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "cb": [
+        "b0..cf 12x",
+        "add-double/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "cc": [
+        "b0..cf 12x",
+        "sub-double/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "cd": [
+        "b0..cf 12x",
+        "mul-double/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "ce": [
+        "b0..cf 12x",
+        "div-double/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "cf": [
+        "b0..cf 12x",
+        "rem-double/2addr vA, vB",
+        "A: destination and first source register or pair\n(4 bits)\nB: second source register or pair (4 bits)",
+        "Perform the identified binary operation on the two source registers,\nstoring the result in the first source register.\nNote:\nContrary to other -long/2addr mathematical operations\n(which take register pairs for both their destination/first source and\ntheir second source), shl-long/2addr,\nshr-long/2addr, and ushr-long/2addr take a\nregister pair for their destination/first source (the value to be\nshifted), but a single register for their second source (the shifting\ndistance)."
+    ],
+    "d0": [
+        "d0..d7 22s",
+        "add-int/lit16 vA, vB, #+CCCC",
+        "A: destination register (4 bits)\nB: source register (4 bits)\nC: signed int constant (16 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result in\nthe destination register.\nNote:\nrsub-int does not have a suffix since this version is the\nmain opcode of its family. Also, see below for details on its semantics."
+    ],
+    "d1": [
+        "d0..d7 22s",
+        "rsub-int (reverse subtract) vA, vB, #+CCCC",
+        "A: destination register (4 bits)\nB: source register (4 bits)\nC: signed int constant (16 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result in\nthe destination register.\nNote:\nrsub-int does not have a suffix since this version is the\nmain opcode of its family. Also, see below for details on its semantics."
+    ],
+    "d2": [
+        "d0..d7 22s",
+        "mul-int/lit16 vA, vB, #+CCCC",
+        "A: destination register (4 bits)\nB: source register (4 bits)\nC: signed int constant (16 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result in\nthe destination register.\nNote:\nrsub-int does not have a suffix since this version is the\nmain opcode of its family. Also, see below for details on its semantics."
+    ],
+    "d3": [
+        "d0..d7 22s",
+        "div-int/lit16 vA, vB, #+CCCC",
+        "A: destination register (4 bits)\nB: source register (4 bits)\nC: signed int constant (16 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result in\nthe destination register.\nNote:\nrsub-int does not have a suffix since this version is the\nmain opcode of its family. Also, see below for details on its semantics."
+    ],
+    "d4": [
+        "d0..d7 22s",
+        "rem-int/lit16 vA, vB, #+CCCC",
+        "A: destination register (4 bits)\nB: source register (4 bits)\nC: signed int constant (16 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result in\nthe destination register.\nNote:\nrsub-int does not have a suffix since this version is the\nmain opcode of its family. Also, see below for details on its semantics."
+    ],
+    "d5": [
+        "d0..d7 22s",
+        "and-int/lit16 vA, vB, #+CCCC",
+        "A: destination register (4 bits)\nB: source register (4 bits)\nC: signed int constant (16 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result in\nthe destination register.\nNote:\nrsub-int does not have a suffix since this version is the\nmain opcode of its family. Also, see below for details on its semantics."
+    ],
+    "d6": [
+        "d0..d7 22s",
+        "or-int/lit16 vA, vB, #+CCCC",
+        "A: destination register (4 bits)\nB: source register (4 bits)\nC: signed int constant (16 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result in\nthe destination register.\nNote:\nrsub-int does not have a suffix since this version is the\nmain opcode of its family. Also, see below for details on its semantics."
+    ],
+    "d7": [
+        "d0..d7 22s",
+        "xor-int/lit16 vA, vB, #+CCCC",
+        "A: destination register (4 bits)\nB: source register (4 bits)\nC: signed int constant (16 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result in\nthe destination register.\nNote:\nrsub-int does not have a suffix since this version is the\nmain opcode of its family. Also, see below for details on its semantics."
+    ],
+    "d8": [
+        "d8..e2 22b",
+        "add-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "d9": [
+        "d8..e2 22b",
+        "rsub-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "da": [
+        "d8..e2 22b",
+        "mul-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "db": [
+        "d8..e2 22b",
+        "div-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "dc": [
+        "d8..e2 22b",
+        "rem-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "dd": [
+        "d8..e2 22b",
+        "and-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "de": [
+        "d8..e2 22b",
+        "or-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "df": [
+        "d8..e2 22b",
+        "xor-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "e0": [
+        "d8..e2 22b",
+        "shl-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "e1": [
+        "d8..e2 22b",
+        "shr-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "e2": [
+        "d8..e2 22b",
+        "ushr-int/lit8 vAA, vBB, #+CC",
+        "A: destination register (8 bits)\nB: source register (8 bits)\nC: signed int constant (8 bits)",
+        "Perform the indicated binary op on the indicated register (first\nargument) and literal value (second argument), storing the result\nin the destination register.\nNote: See below for details on the semantics of\nrsub-int."
+    ],
+    "e3": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "e4": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "e5": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "e6": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "e7": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "e8": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "e9": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "ea": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "eb": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "ec": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "ed": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "ee": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "ef": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f0": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f1": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f2": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f3": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f4": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f5": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f6": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f7": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f8": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "f9": [
+        "e3..f9 10x",
+        "(unused)",
+        "",
+        "(unused)"
+    ],
+    "fa": [
+        "fa 45cc",
+        "invoke-polymorphic {vC, vD, vE, vF, vG}, meth@BBBB, proto@HHHH",
+        "A: argument word count (4 bits)\nB: method reference index (16 bits)\nC: receiver (16 bits)\nD..G: argument registers (4 bits each)\nH: prototype reference index (16 bits)",
+        "Invoke the indicated signature polymorphic method. The result (if any) may be stored\nwith an appropriate move-result* variant as the immediately\nsubsequent instruction.\nThe method reference must be to a signature polymorphic method, such as\njava.lang.invoke.MethodHandle.invoke or\njava.lang.invoke.MethodHandle.invokeExact.\nThe receiver must be an object supporting the signature polymorphic\nmethod being invoked.\nThe prototype reference describes the argument types provided\nand the expected return type.\nThe invoke-polymorphic bytecode may raise exceptions when it\nexecutes. The exceptions are described in the API documentation\nfor the signature polymorphic method being invoked.\nPresent in Dex files from version 038 onwards."
+    ],
+    "fb": [
+        "fb 4rcc",
+        "invoke-polymorphic/range {vCCCC .. vNNNN}, meth@BBBB, proto@HHHH",
+        "A: argument word count (8 bits)\nB: method reference index (16 bits)\nC: receiver (16 bits)\nH: prototype reference index (16 bits)\nN = A + C - 1",
+        "Invoke the indicated method handle. See the invoke-polymorphic\ndescription above for details.\nPresent in Dex files from version 038 onwards."
+    ],
+    "fc": [
+        "fc 35c",
+        "invoke-custom {vC, vD, vE, vF, vG}, call_site@BBBB",
+        "A: argument word count (4 bits)\nB: call site reference index (16 bits)\nC..G: argument registers (4 bits each)",
+        "Resolves and invokes the indicated call site.\nThe result from the invocation (if any) may be stored with an\nappropriate move-result* variant as the immediately\nsubsequent instruction.\n\nThis instruction executes in two phases: call site\nresolution and call site invocation.\n\nCall site resolution checks whether the indicated\ncall site has an associated java.lang.invoke.CallSite instance.\nIf not, the bootstrap linker method for the indicated call site is\ninvoked using arguments present in the DEX file\n(see call_site_item). The\nbootstrap linker method returns\na java.lang.invoke.CallSite instance that will then\nbe associated with the indicated call site if no association\nexists. Another thread may have already made the association first,\nand if so execution of the instruction continues with the\nfirst associated java.lang.invoke.CallSite instance.\n\nCall site invocation is made on the\njava.lang.invoke.MethodHandle target of the resolved\njava.lang.invoke.CallSite instance. The target is invoked as\nif executing invoke-polymorphic (described above) using the\nmethod handle and arguments to the invoke-custom instruction\nas the arguments to an exact method handle invocation.\n\nExceptions raised by the bootstrap linker method are wrapped\nin a java.lang.BootstrapMethodError.  A\nBootstrapMethodError is also raised if:\n\nthe bootstrap linker method fails to return a\njava.lang.invoke.CallSite instance.\nthe returned java.lang.invoke.CallSite has a\nnull method handle target.\nthe method handle target is not of the requested type.\n\nPresent in Dex files from version 038 onwards."
+    ],
+    "fd": [
+        "fd 3rc",
+        "invoke-custom/range {vCCCC .. vNNNN}, call_site@BBBB",
+        "A: argument word count (8 bits)\nB: call site reference index (16 bits)\nC: first argument register (16-bits)\nN = A + C - 1",
+        "Resolve and invoke a call site. See the invoke-custom\ndescription above for details.\nPresent in Dex files from version 038 onwards."
+    ],
+    "fe": [
+        "fe 21c",
+        "const-method-handle vAA, method_handle@BBBB",
+        "A: destination register (8 bits)\nB: method handle index (16 bits)",
+        "Move a reference to the method handle specified by the given index into the\nspecified register.\nPresent in Dex files from version 039 onwards."
+    ],
+    "ff": [
+        "ff 21c",
+        "const-method-type vAA, proto@BBBB",
+        "A: destination register (8 bits)\nB: method prototype reference (16 bits)",
+        "Move a reference to the method prototype specified by the given index into the\nspecified register.\nPresent in Dex files from version 039 onwards."
+    ]
+}
