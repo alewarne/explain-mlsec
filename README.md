@@ -1,4 +1,4 @@
-# ExplainSecurityDNNs
+# Evaluating Explanation Methods for Deep Learning in Security
 
 This repository contains code connected to the paper
 
